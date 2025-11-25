@@ -51,7 +51,7 @@ export default function ThemedSearchBar({
       <Ionicons
         name="search-outline"
         size={22}
-        color={isFocused ? theme.tabIconSelected : theme.text + "99"}
+        color={isFocused ? theme.tabIconSelected : theme.text + "33"}
         style={{ marginHorizontal: 8 }}
       />
       <TextInput

@@ -3,10 +3,12 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Colors } from "@/constants/theme";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React from "react";
 import { FlatList, Image, Pressable, useColorScheme, View } from "react-native";
 
 export default function Person() {
+  const router = useRouter();
   const data = [
     {
       id: 1,
@@ -109,17 +111,19 @@ export default function Person() {
           </View>
         </Pressable>
 
-        <Image
-          source={{ uri: "https://randomuser.me/api/portraits/men/12.jpg" }}
-          style={{
-            width: 40,
-            height: 40,
-            objectFit: "cover",
-            borderRadius: 20,
-            borderWidth: 2,
-            borderColor: theme.borderColor,
-          }}
-        />
+        <Pressable onPress={()=>{router.push("/(tabs)/create")}}>
+          <Image
+            source={{ uri: "https://randomuser.me/api/portraits/men/12.jpg" }}
+            style={{
+              width: 40,
+              height: 40,
+              objectFit: "cover",
+              borderRadius: 20,
+              borderWidth: 2,
+              borderColor: theme.borderColor,
+            }}
+          />
+        </Pressable>
       </ThemedView>
       <FlatList
         data={data}
@@ -137,8 +141,14 @@ export default function Person() {
         }}
         renderItem={({ item }) => (
           <ThemeCardButton
-            style={{ width: "45%", alignItems: "center", gap: 10,shadowColor: "#000",
-            shadowOpacity: 0.1,elevation: 2, }}
+            style={{
+              width: "45%",
+              alignItems: "center",
+              gap: 10,
+              shadowColor: "#000",
+              shadowOpacity: 0.1,
+              elevation: 2,
+            }}
             id={item.id}
           >
             <Ionicons name={item.icon as any} size={24} color={theme.icon} />

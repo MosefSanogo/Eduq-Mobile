@@ -3,6 +3,7 @@ import ThemedSearchBar from "@/components/theme-search-box";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Colors } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, useColorScheme } from "react-native";
 
@@ -24,6 +25,14 @@ const Paiement = () => {
       mois: "Février 2025",
     },
   ];
+  const filterPaie = paiements.filter(p=>{
+    if(p.type.toLowerCase().includes(search.toLowerCase())||p.date.toLowerCase().includes(search.toLowerCase())
+    ||p.mois.toLowerCase().includes(search.toLowerCase())){
+        return true
+      }
+
+      return false
+  })
   return (
     <ThemedView
       style={{
@@ -49,9 +58,26 @@ const Paiement = () => {
         showsVerticalScrollIndicator={false}
         style={{ zIndex: -1000 }}
       >
-        {paiements.map((p, i) => (
+        {filterPaie.length > 0 ? filterPaie.map((p, i) => (
           <ThemedPaymentCard key={i} {...p} />
-        ))}
+        )) :(
+          <ThemedView
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+              gap: 15,
+              marginTop: 30,
+            }}
+          >
+            <Ionicons
+              name="search-outline"
+              size={30}
+              color={Colors[colorScheme].icon}
+            />
+            <ThemedText type="subtitle">Aucune matière trouvée</ThemedText>
+          </ThemedView>
+        )} 
       </ScrollView>
     </ThemedView>
   );
