@@ -1,33 +1,121 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Colors } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { View, useColorScheme } from "react-native";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function Layout() {
+  const colorScheme = useColorScheme() ?? "light";
+  const theme = Colors[colorScheme];
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          backgroundColor: theme.navBarBack,
+          height: 140,
+          paddingTop: 8,
+          borderTopColor: theme.borderColor,
+          borderTopWidth: 0.4,
+        },
+        tabBarActiveTintColor: theme.tabIconSelected,
+        tabBarInactiveTintColor: theme.tabIconDefault,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          marginBottom: 6,
+          marginTop: 10,
+        },
+        // ✅ effet de fond actif + arrondi
+        tabBarIconStyle: {
+          marginTop: 5,
+        },
+      }}
+    >
+      {/* --- Onglet Accueil --- */}
       <Tabs.Screen
-        name="index"
+        name="person"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Accueil",
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? theme.tabIconActiveBackground
+                  : "transparent",
+                padding: 8,
+                borderRadius: 35,
+                width: 60,
+                height: 35,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={20}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
+
+      {/* --- Onglet Profs --- */}
       <Tabs.Screen
-        name="explore"
+        name="book"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Profs",
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? theme.tabIconActiveBackground
+                  : "transparent",
+                padding: 8,
+                borderRadius: 35,
+                width: 60,
+                height: 35,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={focused ? "people" : "people-outline"}
+                size={20}
+                color={color}
+              />
+            </View>
+          ),
+        }}
+      />
+
+      {/* --- Onglet Compte --- */}
+      <Tabs.Screen
+        name="create"
+        options={{
+          title: "Compte",
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={{
+                backgroundColor: focused
+                  ? theme.tabIconActiveBackground
+                  : "transparent",
+                padding: 8,
+                borderRadius: 35,
+                width: 60,
+                height: 35,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name={focused ? "person" : "person-outline"}
+                size={20}
+                color={color}
+              />
+            </View>
+          ),
         }}
       />
     </Tabs>
